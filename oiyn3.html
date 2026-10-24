@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>«QR-Жұмбақтар» Балаларға арналған ойын</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Tone.js for Sound Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'kids-blue': '#00a8ff',
+                        'kids-purple': '#9c88ff',
+                        'kids-yellow': '#fbc531',
+                        'kids-green': '#4cd137',
+                        'kids-pink': '#487eb0',
+                        'kids-red': '#e84118'
+                    },
+                    boxShadow: {
+                        'fun': '0 10px 0px 0px rgba(0, 0, 0, 0.15)',
+                        'btn': '0 8px 0px 0px #0088cc',
+                        'btn-green': '0 8px 0px 0px #32a822',
+                        'card': '0 15px 30px rgba(0,0,0,0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            min-height: 100vh;
+            user-select: none;
+        }
+
+        /* Анимациялар */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255,255,255,0.6)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px rgba(255,255,255,0.9)); }
+        }
+
+        @keyframes float-around {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(15px, 20px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .animate-bounce-slow {
+            animation: bounce-slow 3s infinite ease-in-out;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 2.5s infinite ease-in-out;
+        }
+
+        .floating-bg {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            animation: float-around 6s infinite ease-in-out;
+        }
+
+        /* Батырмалар мен карточкалар эффектілері */
+        .btn-kids {
+            transition: all 0.1s ease;
+        }
+        .btn-kids:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0px 0px rgba(0,0,0,0.2) !important;
+        }
+
+        .qr-card {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .qr-card:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        /* Басқару элементтері */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 4px solid #ffffff;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 overflow-x-hidden relative">
+
+    <!-- Жылжымалы фондық элементтер (Шарлар мен жұлдыздар) -->
+    <div class="floating-bg top-10 left-10 text-yellow-300 text-5xl opacity-70"><i class="fa-solid fa-star"></i></div>
+    <div class="floating-bg top-20 right-12 text-pink-300 text-6xl opacity-60" style="animation-delay: -2s;"><i class="fa-solid fa-cloud"></i></div>
+    <div class="floating-bg bottom-10 left-16 text-cyan-300 text-6xl opacity-70" style="animation-delay: -4s;"><i class="fa-solid fa-heart"></i></div>
+    <div class="floating-bg bottom-16 right-20 text-green-300 text-5xl opacity-60" style="animation-delay: -1s;"><i class="fa-solid fa-shapes"></i></div>
+
+    <!-- НЕГІЗГІ ОЙЫН СКОУПЫ -->
+    <div id="app-container" class="w-full max-w-4xl z-10 relative">
+
+        <!-- 1. БАСТАПҚЫ ЕКРАН (Басты бет) -->
+        <div id="start-screen" class="glass-panel rounded-3xl p-6 md:p-10 text-center shadow-2xl relative overflow-hidden">
+            <!-- Бұрыштағы өрнектер -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-300 rounded-full opacity-50"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-400 rounded-full opacity-50"></div>
+
+            <!-- Тақырыптық Иконка -->
+            <div class="flex justify-center mb-6">
+                <div class="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-tr from-cyan-400 to-blue-600 rounded-3xl p-4 flex items-center justify-center shadow-xl animate-pulse-glow border-4 border-white">
+                    <span class="text-white text-7xl md:text-8xl font-black flex items-center justify-center">
+                        <i class="fa-solid fa-circle-question animate-bounce-slow"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Басты Тақырып -->
+            <h1 class="text-3xl md:text-5xl font-black text-gray-800 tracking-wide mb-3">
+                «QR-Жұмбақтар» <span class="text-blue-500">тест</span>
+            </h1>
+            
+            <!-- Ішкі сөз -->
+            <p class="text-gray-600 text-lg md:text-xl font-semibold mb-8 max-w-lg mx-auto">
+                Отбасылық онлайн викторина мен жұмбақтар сайысы.
+            </p>
+
+            <!-- Түймелер жинағы -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto">
+                <button onclick="startGame('qr')" class="btn-kids w-full bg-cyan-500 hover:bg-cyan-400 text-white font-extrabold text-xl md:text-2xl py-4 px-8 rounded-2xl shadow-btn flex items-center justify-center gap-3 border-2 border-cyan-300">
+                    <i class="fa-solid fa-gamepad text-2xl"></i>
+                    Викторинаға өту
+                </button>
+            </div>
+
+            <div class="mt-8 text-sm text-gray-400 font-bold">
+                ✨ Бақытты отбасы - Ақылды балалар! ✨
+            </div>
+        </div>
+
+        <!-- 2. РЕЖИМ СЕЛОКТОРЫ / ҚҰПИЯ QR-КАРТАЛАР (ЖҰМБАҚТАРДЫ ТАҢДАУ) -->
+        <div id="qr-select-screen" class="hidden glass-panel rounded-3xl p-6 md:p-8 text-center shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <button onclick="showStartScreen()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-xl flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Артқа
+                </button>
+                <div class="text-xl font-black text-purple-600">
+                    Үпай: <span id="total-score">0</span> 🌟
+                </div>
+            </div>
+
+            <h2 class="text-2xl md:text-3xl font-black text-gray-800 mb-2">QR Карточканы таңдаңыз!</h2>
+            <p class="text-gray-600 font-medium mb-6">Әр карточканың артында қызықты жұмбақ жасырулы 🔍</p>
+
+            <!-- QR Карточкалар торы -->
+            <div id="qr-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 mb-6">
+                <!-- Төменде JS арқылы динамикалы генерирацияланады -->
+            </div>
+
+            <button onclick="startQuizDirectly()" class="btn-kids bg-emerald-500 hover:bg-emerald-400 text-white font-extrabold text-lg py-3 px-6 rounded-xl shadow-btn-green">
+                Барлық викторина сұрақтарын бірінен соң бірін өту 🚀
+            </button>
+        </div>
+
+        <!-- 3. ОЙЫН / СҰРАҚ-ЖҰМБАҚ ЕКРАНЫ -->
+        <div id="quiz-screen" class="hidden glass-panel rounded-3xl p-6 md:p-10 shadow-2xl relative">
+            <!-- Верхняя панель (Прогресс мен Таймер) -->
+            <div class="flex justify-between items-center mb-6 bg-blue-50 p-3 md:p-4 rounded-2xl border-2 border-blue-100">
+                <button onclick="backToQRSelect()" class="text-gray-500 hover:text-gray-700 font-bold">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+                
+                <!-- Прогресс бары -->
+                <div class="w-1/2 bg-gray-200 h-4 rounded-full overflow-hidden border border-gray-300">
+                    <div id="progress-bar" class="bg-gradient-to-r from-yellow-400 to-orange-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <div class="font-black text-lg text-purple-600 flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-yellow-500"></i>
+                    <span id="quiz-score">0</span>
+                </div>
+            </div>
+
+            <!-- Жұмбақ/Сұрақ мазмұны -->
+            <div class="text-center mb-8">
+                <span id="question-badge" class="inline-block bg-purple-100 text-purple-700 font-extrabold text-sm md:text-base px-4 py-1.5 rounded-full mb-3 border border-purple-200">
+                    Жұмбақ №1
+                </span>
+                <h3 id="question-text" class="text-xl md:text-3xl font-black text-gray-800 leading-snug min-h-[80px] flex items-center justify-center">
+                    Сұрақ жүктелуде...
+                </h3>
+            </div>
+
+            <!-- Жауап нұсқалары (Buttons) -->
+            <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <!-- Жауаптар JS арқылы қосылады -->
+            </div>
+
+            <!-- Фидбек хабарламасы (Дұрыс / Қате) -->
+            <div id="feedback-modal" class="hidden text-center p-4 rounded-2xl font-bold text-lg animate-bounce-slow">
+                <span id="feedback-text"></span>
+            </div>
+        </div>
+
+        <!-- 4. НӘТИЖЕ ЕКРАНЫ (ФИНИШ) -->
+        <div id="result-screen" class="hidden glass-panel rounded-3xl p-8 md:p-12 text-center shadow-2xl">
+            <div class="text-6xl md:text-8xl mb-4 animate-bounce-slow">🏆</div>
+            <h2 class="text-3xl md:text-5xl font-black text-gray-800 mb-2">Жарайсың, Балақай!</h2>
+            <p class="text-gray-600 text-lg md:text-xl font-bold mb-6">Сен барлық жұмбақтар мен викторинадан мүдірмей өттің!</p>
+            
+            <div class="bg-yellow-100 border-4 border-yellow-300 rounded-2xl p-6 max-w-md mx-auto mb-8 shadow-inner">
+                <p class="text-gray-700 text-lg font-bold">Жиналған ұпайың:</p>
+                <p id="final-score" class="text-5xl font-black text-orange-500 my-2">0</p>
+                <p id="result-rating" class="text-purple-700 font-extrabold text-xl">Өте тамаша нәтиже! 🌟</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="restartGame()" class="btn-kids bg-cyan-500 hover:bg-cyan-400 text-white font-extrabold text-xl py-4 px-8 rounded-2xl shadow-btn">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> Қайта ойнау
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Скрипт логикасы -->
+    <script>
+        // Дыбыстық эффектілер (Tone.js)
+        const synth = new Tone.Synth().toDestination();
+        
+        function playCorrectSound() {
+            try {
+                const now = Tone.now();
+                synth.triggerAttackRelease("C5", "8n", now);
+                synth.triggerAttackRelease("E5", "8n", now + 0.1);
+                synth.triggerAttackRelease("G5", "8n", now + 0.2);
+            } catch(e){}
+        }
+
+        function playWrongSound() {
+            try {
+                const now = Tone.now();
+                synth.triggerAttackRelease("A3", "8n", now);
+                synth.triggerAttackRelease("F3", "8n", now + 0.15);
+            } catch(e){}
+        }
+
+        function playWinSound() {
+            try {
+                const now = Tone.now();
+                synth.triggerAttackRelease("C4", "8n", now);
+                synth.triggerAttackRelease("E4", "8n", now + 0.1);
+                synth.triggerAttackRelease("G4", "8n", now + 0.2);
+                synth.triggerAttackRelease("C5", "4n", now + 0.3);
+            } catch(e){}
+        }
+
+        // Жұмбақтар мен Викторина деректер қоры (Балаларға арналған)
+        const quizData = [
+            {
+                id: 1,
+                riddle: "Тұмсығымен су шашады, алып денесімен қорқытады. Бұл не?",
+                options: ["Піл 🐘", "Арыстан 🦁", "Жираф 🦒", "Бегемот 🦛"],
+                correct: 0,
+                icon: "fa-elephant"
+            },
+            {
+                id: 2,
+                riddle: "Күндіз соқыр, түнде мерген, ағашқа қонып ұйықтаған. Бұл не?",
+                options: ["Қарлығаш 🐦", "Үкі 🦉", "Бүркіт 🦅", "Тоқылдақ 🐤"],
+                correct: 1,
+                icon: "fa-owl"
+            },
+            {
+                id: 3,
+                riddle: "Қыста ақ, жазда сұр. Қорқақ, бірақ өте жүйрік. Бұл не?",
+                options: ["Қасқыр 🐺", "Аю 🐻", "Қоян 🐰", "Түлкі 🦊"],
+                correct: 2,
+                icon: "fa-rabbit"
+            },
+            {
+                id: 4,
+                riddle: "Үстінде инесі көп, бірақ тігін тіге алмайды. Бұл не?",
+                options: ["Кірпі 🦔", "Балық 🐟", "Мылсық 🐱", "Тасбақа 🐢"],
+                correct: 0,
+                icon: "fa-hedgehog"
+            },
+            {
+                id: 5,
+                riddle: "Көкте жүзеді, бұлттан тамады, жерді суарады. Бұл не?",
+                options: ["Қар ❄️", "Жамбыр 🌧️", "Жел 🌬️", "Күн ☀️"],
+                correct: 1,
+                icon: "fa-cloud-rain"
+            },
+            {
+                id: 6,
+                riddle: "Тілі жоқ, өзі сөйлейді, білімнің көзін ашады. Бұл не?",
+                options: ["Дәптер 📓", "Қалам ✏️", "Кітап 📖", "Компьютер 💻"],
+                correct: 2,
+                icon: "fa-book"
+            },
+            {
+                id: 7,
+                riddle: "Аяғы жоқ, жүреді, сыртылдап уақытты білдіреді. Бұл не?",
+                options: ["Сағат ⏰", "Машина 🚗", "Телефоны 📱", "Доп ⚽"],
+                correct: 0,
+                icon: "fa-clock"
+            },
+            {
+                id: 8,
+                riddle: "Өзі ащы, бірақ тағамның дәмін келтіреді. Бұл не?",
+                options: ["Шекер 🍬", "Тұз 🧂", "Бұрыш 🌶️", "Май 🧈"],
+                correct: 1,
+                icon: "fa-salt-shaker"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let solvedQRs = new Set();
+        let isDirectQuizMode = false;
+
+        // Элементтер
+        const startScreen = document.getElementById('start-screen');
+        const qrSelectScreen = document.getElementById('qr-select-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        
+        const qrGrid = document.getElementById('qr-grid');
+        const questionBadge = document.getElementById('question-badge');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressBar = document.getElementById('progress-bar');
+        const quizScore = document.getElementById('quiz-score');
+        const totalScore = document.getElementById('total-score');
+
+        // Ойынды бастау
+        function startGame(mode) {
+            Tone.start();
+            startScreen.classList.add('hidden');
+            qrSelectScreen.classList.remove('hidden');
+            renderQRGrid();
+        }
+
+        function showStartScreen() {
+            qrSelectScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        }
+
+        // QR Карточкаларды торға шығару
+        function renderQRGrid() {
+            qrGrid.innerHTML = '';
+            totalScore.textContent = score;
+
+            quizData.forEach((item, index) => {
+                const isSolved = solvedQRs.has(item.id);
+                const card = document.createElement('div');
+                card.className = `qr-card glass-panel p-4 rounded-2xl flex flex-col items-center justify-center cursor-pointer border-4 ${
+                    isSolved ? 'border-green-400 bg-green-50 opacity-80' : 'border-blue-300 hover:border-yellow-400'
+                }`;
+
+                card.innerHTML = `
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-900 rounded-xl p-2 flex items-center justify-center mb-2 relative overflow-hidden">
+                        <!-- Виртуалды QR өрнегі -->
+                        <div class="grid grid-cols-3 gap-1 w-full h-full">
+                            <div class="bg-white rounded-xs"></div>
+                            <div class="bg-blue-400 rounded-xs"></div>
+                            <div class="bg-white rounded-xs"></div>
+                            <div class="bg-white rounded-xs"></div>
+                            <div class="bg-yellow-400 rounded-xs"></div>
+                            <div class="bg-white rounded-xs"></div>
+                            <div class="bg-white rounded-xs"></div>
+                            <div class="bg-white rounded-xs"></div>
+                            <div class="bg-white rounded-xs"></div>
+                        </div>
+                        ${isSolved ? '<div class="absolute inset-0 bg-green-500/80 flex items-center justify-center text-white text-3xl font-bold"><i class="fa-solid fa-check"></i></div>' : ''}
+                    </div>
+                    <span class="font-extrabold text-sm text-gray-700">QR Жұмбақ #${index + 1}</span>
+                    <span class="text-xs font-bold ${isSolved ? 'text-green-600' : 'text-blue-500'}">
+                        ${isSolved ? 'Орындалды ✨' : 'Сканерлеу 🔍'}
+                    </span>
+                `;
+
+                if (!isSolved) {
+                    card.onclick = () => openQuestion(index);
+                }
+                qrGrid.appendChild(card);
+            });
+        }
+
+        // Тікелей Викторинаны бастау
+        function startQuizDirectly() {
+            isDirectQuizMode = true;
+            currentQuestionIndex = 0;
+            qrSelectScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // Жеке сұрақты ашу
+        function openQuestion(index) {
+            isDirectQuizMode = false;
+            currentQuestionIndex = index;
+            qrSelectScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            loadQuestion(index);
+        }
+
+        // Сұрақты жүктеу
+        function loadQuestion(index) {
+            const data = quizData[index];
+            questionBadge.textContent = `Жұмбақ №${index + 1}`;
+            questionText.textContent = data.riddle;
+            quizScore.textContent = score;
+
+            // Прогресті жаңарту
+            const progressPercentage = ((index + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            // Варианттарды шығару
+            optionsContainer.innerHTML = '';
+            data.options.forEach((opt, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = `btn-kids bg-white hover:bg-blue-50 text-gray-800 font-extrabold text-lg md:text-xl py-4 px-6 rounded-2xl border-4 border-gray-200 hover:border-blue-400 shadow-md transition-all text-left flex items-center justify-between`;
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <i class="fa-solid fa-circle-dot text-gray-300"></i>
+                `;
+                btn.onclick = () => checkAnswer(optIdx, data.correct, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // Жауапты тексеру
+        function checkAnswer(selected, correct, btnElement) {
+            const allButtons = optionsContainer.querySelectorAll('button');
+            allButtons.forEach(b => b.disabled = true); // Түймелерді бұғаттау
+
+            if (selected === correct) {
+                // Дұрыс жауап
+                playCorrectSound();
+                btnElement.classList.remove('bg-white', 'border-gray-200');
+                btnElement.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                btnElement.querySelector('i').className = 'fa-solid fa-circle-check text-green-500 text-2xl';
+
+                score += 10;
+                quizScore.textContent = score;
+                solvedQRs.add(quizData[currentQuestionIndex].id);
+
+                // Конфетти эффектісі
+                confetti({
+                    particleCount: 40,
+                    spread: 60,
+                    origin: { y: 0.7 }
+                });
+
+                setTimeout(() => {
+                    nextStep();
+                }, 1300);
+
+            } else {
+                // Қате жауап
+                playWrongSound();
+                btnElement.classList.remove('bg-white', 'border-gray-200');
+                btnElement.classList.add('bg-red-100', 'border-red-400', 'text-red-800');
+                btnElement.querySelector('i').className = 'fa-solid fa-circle-xmark text-red-500 text-2xl';
+
+                // Дұрыс жауапты көрсету
+                allButtons[correct].classList.remove('bg-white', 'border-gray-200');
+                allButtons[correct].classList.add('bg-green-100', 'border-green-400');
+
+                setTimeout(() => {
+                    nextStep();
+                }, 1800);
+            }
+        }
+
+        // Келесі қадамға өту
+        function nextStep() {
+            if (isDirectQuizMode) {
+                if (currentQuestionIndex < quizData.length - 1) {
+                    currentQuestionIndex++;
+                    loadQuestion(currentQuestionIndex);
+                } else {
+                    showFinalResult();
+                }
+            } else {
+                // QR режимінде қайта тізімге оралу немесе бәрі бітсе нәтиже көрсету
+                if (solvedQRs.size === quizData.length) {
+                    showFinalResult();
+                } else {
+                    backToQRSelect();
+                }
+            }
+        }
+
+        function backToQRSelect() {
+            quizScreen.classList.add('hidden');
+            qrSelectScreen.classList.remove('hidden');
+            renderQRGrid();
+        }
+
+        // Соңғы нәтижені көрсету
+        function showFinalResult() {
+            playWinSound();
+            quizScreen.classList.add('hidden');
+            qrSelectScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            document.getElementById('final-score').textContent = score;
+            
+            // Торт салют конфетти
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+
+        // Ойынды қайта бастау
+        function restartGame() {
+            score = 0;
+            solvedQRs.clear();
+            currentQuestionIndex = 0;
+            resultScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
