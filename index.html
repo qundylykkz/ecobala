@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="kk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Ethno Bala — Ата-аналарға арналған этно-экологиялық платформа</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ethno: {
+                            gold: '#D4AF37',
+                            darkGold: '#AA7C11',
+                            green: '#10B981',
+                            darkGreen: '#047857',
+                            lightBg: '#F8FAFC',
+                            brown: '#3B2F2F',
+                            sky: '#0EA5E9',
+                            cardBg: '#FFFFFF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        title: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Барлық элементтерге Montserrat шрифтін мәжбүрлі қолдану */
+        body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, span, p, a {
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        /* Қазақы ою-өрнек узоры бар артқы фон */
+        body {
+            background-color: #fcfbf7;
+            background-image: radial-gradient(#d4af37 0.8px, transparent 0.8px), radial-gradient(#10b981 0.8px, #fcfbf7 0.8px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+        }
+
+        /* Суреттегідей жанып тұратын Логотип рамкасы (Glow Effect) */
+        .logo-glow-frame {
+            position: relative;
+            border-radius: 9999px;
+            background: #ffffff;
+            padding: 10px;
+            box-shadow: 
+                0 0 0 4px #ffffff,
+                0 0 0 10px #facc15,
+                0 0 25px 12px rgba(250, 204, 21, 0.65),
+                0 0 50px 20px rgba(255, 255, 255, 0.4);
+            transition: all 0.5s ease;
+        }
+
+        .logo-glow-frame:hover {
+            box-shadow: 
+                0 0 0 4px #ffffff,
+                0 0 0 12px #fbbf24,
+                0 0 35px 18px rgba(251, 191, 36, 0.85),
+                0 0 65px 28px rgba(255, 255, 255, 0.6);
+            transform: scale(1.03);
+        }
+
+        /* Төменге нұсқау анимациясы */
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        .bounce-element {
+            animation: bounceSlow 2s infinite;
+        }
+
+        /* Скроллбар баптауы */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10B981;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 flex flex-col min-h-screen selection:bg-ethno-gold selection:text-white">
+
+    <!-- Sticky Navigation Bar / Жылжымалы меню -->
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Лого шағын -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xl border-2 border-ethno-gold group-hover:scale-105 transition">
+                        E
+                    </div>
+                    <span class="font-bold text-lg text-slate-900 tracking-tight">Eco-Ethno <span class="text-ethno-gold">Bala</span></span>
+                </a>
+
+                <!-- Навигация сілтемелері -->
+                <div class="hidden md:flex space-x-1 lg:space-x-4 font-semibold text-sm">
+                    <a href="#main" class="px-3 py-2 rounded-xl text-slate-700 hover:text-emerald-600 hover:bg-emerald-50 transition">Бас бет</a>
+                    <a href="#videos" class="px-3 py-2 rounded-xl text-slate-700 hover:text-emerald-600 hover:bg-emerald-50 transition">Бейне-нұсқаулықтар</a>
+                    <a href="#tales" class="px-3 py-2 rounded-xl text-slate-700 hover:text-emerald-600 hover:bg-emerald-50 transition">Ертегілер әлемі</a>
+                    <a href="#interactive" class="px-3 py-2 rounded-xl text-slate-700 hover:text-emerald-600 hover:bg-emerald-50 transition">Интерактив</a>
+                    <a href="#academy" class="px-3 py-2 rounded-xl text-slate-700 hover:text-emerald-600 hover:bg-emerald-50 transition">Этно-Академия</a>
+                    <a href="#ok-challenge" class="px-3 py-2 rounded-xl text-slate-700 hover:text-emerald-600 hover:bg-emerald-50 transition">ОК Челлендж</a>
+                    <a href="#assessment" class="px-3 py-2 rounded-xl text-slate-700 hover:text-emerald-600 hover:bg-emerald-50 transition">Кері байланыс</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. FULL SCREEN HERO SECTION (БАТЫР БӨЛІМ) -->
+    <section id="hero" class="min-h-screen relative flex items-center justify-center bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 text-white px-4 overflow-hidden -mt-16 pt-16">
+        <div class="absolute inset-0 opacity-10 pointer-events-none flex justify-between items-center px-12">
+            <div class="text-[180px] font-bold">🇰ℤ</div>
+            <div class="text-[180px] font-bold">🌿</div>
+        </div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center py-12">
+            <div class="mb-10 mt-4">
+                <div class="logo-glow-frame w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
+                    <div class="w-full h-full rounded-full overflow-hidden bg-slate-900 flex items-center justify-center border-2 border-slate-200">
+                        <img src="images/logo.jpg" alt="Eco-Ethno Bala Logo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/400x400/0f172a/facc15?text=logo.png';">
+                    </div>
+                </div>
+            </div>
+
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-ethno-gold/40 text-ethno-gold px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4 shadow">
+                <i class="fa-solid fa-graduation-cap"></i> МЕКТЕПКЕ ДЕЙІНГІ БІЛІМ БЕРУ
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white drop-shadow-lg mb-6">
+                Eco-Ethno <span class="text-ethno-gold">Bala</span>
+            </h1>
+
+            <p class="text-base sm:text-xl text-emerald-100 max-w-2xl font-light leading-relaxed mb-10">
+                Ата-аналарға арналған ұлттық тәрбие, экологиялық мәдениет және баланың саусақ моторикасын дамытудың заманауи веб-платформасы.
+            </p>
+
+            <a href="#main" class="bg-gradient-to-r from-ethno-gold to-amber-500 hover:from-amber-500 hover:to-ethno-gold text-slate-900 font-extrabold px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-1 flex items-center gap-3 text-lg">
+                <span>Материалдарды қарау</span>
+                <i class="fa-solid fa-arrow-down bounce-element"></i>
+            </a>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#fcfbf7] to-transparent"></div>
+    </section>
+
+    <!-- НЕГІЗГІ КОНТЕНТ -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+        <!-- 2. БАС БЕТ -->
+        <section id="main" class="scroll-mt-20 space-y-8">
+            <div class="border-b-2 border-ethno-gold/30 pb-4 flex items-center justify-between">
+                <div>
+                    <span class="text-xs font-bold uppercase text-ethno-gold tracking-widest">1-бөлім</span>
+                    <h2 class="text-3xl font-extrabold text-slate-900">Бас Бет — Жаңалықтар мен Міндеттер</h2>
+                </div>
+                <div class="hidden sm:block text-3xl text-ethno-gold"><i class="fa-solid fa-newspaper"></i></div>
+            </div>
+
+            <div class="bg-gradient-to-r from-amber-500 via-amber-600 to-emerald-700 text-white p-8 rounded-3xl shadow-lg relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="bg-white/20 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-white/30">Ағымдағы жоспар</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold mt-3">Қазан - Қараша: «Табиғи асық және қол моторикасы»</h3>
+                    <p class="mt-2 text-amber-50 leading-relaxed text-sm sm:text-base">
+                        Осы айда біз табиғи материалдарды (асық, сүйек, ағаш) тазалау, қауіпсіз өңдеу және баланың саусақ моторикасы мен сөйлеу қабілетін дамытуға арналған жаттығуларға басымдық береміз.
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-3 text-xs sm:text-sm font-semibold">
+                        <span class="bg-white text-slate-800 px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Асықты табиғи бояумен өңдеу</span>
+                        <span class="bg-white text-slate-800 px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> 5 минуттық саусақ массажы</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg">Қыркүйек</span>
+                        <h4 class="font-bold text-slate-900 text-lg mt-3">«Eco-Ethno Bala» платформасының ашылуы</h4>
+                        <p class="text-slate-600 text-sm mt-2">Ата-аналарға арналған этно-экологиялық платформа ресми түрде іске қосылды.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-lg">Қазан</span>
+                        <h4 class="font-bold text-slate-900 text-lg mt-3">«Қауіпсіз сүйек» челленджі басталды</h4>
+                        <p class="text-slate-600 text-sm mt-2">Үйде асықтарды табиғи әдіспен қайнатып, тазалау бойынша видео-нұсқаулық жарияланды.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold bg-sky-100 text-sky-800 px-2.5 py-1 rounded-lg">Қараша</span>
+                        <h4 class="font-bold text-slate-900 text-lg mt-3">«Үйдегі саусақ массажы» марафоны</h4>
+                        <p class="text-slate-600 text-sm mt-2">Күнделікті 5 минуттық алақан массажы арқылы баланың тілін дамыту бағдарламасы.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center pt-2">
+                <a href="files/ЖҰМЫС ЖОСПАРЫ.docx" download="Eco-Ethno_Bala_Жоспар.docx" class="bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-extrabold py-3.5 px-8 rounded-2xl transition flex items-center gap-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base">
+                    <i class="fa-solid fa-file-word text-xl"></i>
+                    <span>Жылдық толық оқу жоспарын жүктеу (DOCX)</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 3. БЕЙНЕ-НҰСҚАУЛЫҚТАР (4 ЖҰМБАҚ + 4 ЖАҢЫЛТПАШ + БАЛА ТІЛІН ШЫҒАРУҒА АРНАЛҒАН 5 ВИДЕО) -->
+        <section id="videos" class="scroll-mt-20 space-y-12">
+            <div class="border-b-2 border-ethno-gold/30 pb-4">
+                <span class="text-xs font-bold uppercase text-ethno-gold tracking-widest">2-бөлім</span>
+                <h2 class="text-3xl font-extrabold text-slate-900">Бейне-нұсқаулықтар жинағы</h2>
+                <p class="text-slate-500 text-sm mt-1">Жұмбақтар, жаңылтпаштар мен баланың тілін дамыту видео-жаттығулары</p>
+            </div>
+
+            <!-- Жұмбақтар (4 Видео) -->
+            <div>
+                <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i> 4 Жұмбақ
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zumbak1.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zumbak1.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">1-Жұмбақ: Қалқиып қос құлағы, елеңдеп қорқып тұрады</h4>
+                        <p class="text-xs text-slate-500">Баламен бірге видеоны көріп, шешуін табыңыз.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zhumbak2.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zhumbak2.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">2-Жұмбақ: Кішкентай ғана бойы бар, айналып киген тоны бар. Бұл не?</h4>
+                        <p class="text-xs text-slate-500">Баламен бірге видеоны көріп, шешуін табыңыз.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zhumbak3.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zhumbak3.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">3-Жұмбақ: Қалың киім ұнатады, Шешіндірсең жылатады</h4>
+                        <p class="text-xs text-slate-500">Баламен бірге видеоны көріп, шешуін табыңыз.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zhumbak4.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zhumbak4.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">4-Жұмбақ: Маң-маң басып келеді, Тапырақтап жел еді...</h4>
+                        <p class="text-xs text-slate-500">Баламен бірге видеоны көріп, шешуін табыңыз.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Жаңылтпаштар (4 Видео) -->
+            <div class="pt-4">
+                <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-comments text-emerald-600"></i> 4 Жаңылтпаш
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zhan1.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zhan1.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">1-Жаңылтпаш: «Арба үстінде шөп, шөп үстінде көк.»</h4>
+                        <p class="text-xs text-slate-500">Дикция мен тілді жаттықтыру ролигі.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zhan2.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zhan2.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">2-Жаңылтпаш: «Тайлақ бота боздайды, ботатай боздайды.»</h4>
+                        <p class="text-xs text-slate-500">Тіл сындыру жаттығуы.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zhan3.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zhan3.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">3-Жаңылтпаш: «Шопан қазын сойды ма, шаруа малын қойды ма?»</h4>
+                        <p class="text-xs text-slate-500">Дыбыстарды анық айту жаттығуы.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/zhan4.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/zhan4.mp4)
+                            </video>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mt-3">4-Жаңылтпаш: «Қара қарға қар үстінде қарқылдады.»</h4>
+                        <p class="text-xs text-slate-500">Жылдам сөйлеу дағдысын дамыту.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ТӨРТ ЖАҢЫЛТПАШТАН КЕЙІН БАЛАНИҢ ТІЛІН ШЫҒАРУҒА АРНАЛҒАН 5 ВИДЕО -->
+            <div class="pt-6 bg-gradient-to-r from-emerald-50 via-teal-50 to-amber-50 p-6 sm:p-8 rounded-3xl border-2 border-emerald-200">
+                <div class="mb-6">
+                    <span class="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Арнайы жаттығулар</span>
+                    <h3 class="text-2xl font-black text-slate-900 mt-2 flex items-center gap-2">
+                        <i class="fa-solid fa-child-reaching text-emerald-600"></i> Баланың тілін шығаруға арналған 5 видео-жаттығу
+                    </h3>
+                    <p class="text-slate-600 text-sm mt-1">Артикуляциялық гимнастика, дыбыстарды дұрыс қою және логопедтік ойын жаттығулары</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 1-видео -->
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4 flex flex-col justify-between">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/articulation1.mp4" type="video/mp4">
+                                Видео жүктелмеді (videos/articulation1.mp4)
+                            </video>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-[10px] font-extrabold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">1-сабақ</span>
+                            <h4 class="font-bold text-slate-800 text-sm mt-1">Артикуляциялық жаттығу: Ерін мен тіл моторикасы</h4>
+                            <p class="text-xs text-slate-500 mt-1">Дыбыстарды анық шығаруға арналған бастапқы жаттығулар комплексі.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2-видео -->
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4 flex flex-col justify-between">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/articulation2.mp4" type="video/mp4">
+                                Видео жүктелмеді (videos/articulation2.mp4)
+                            </video>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-[10px] font-extrabold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">2-сабақ</span>
+                            <h4 class="font-bold text-slate-800 text-sm mt-1">Тыныс алу жаттығулары мен созылыңқы дыбыстар</h4>
+                            <p class="text-xs text-slate-500 mt-1">Сөйлеу тынысын қалыптастыру және дауысты дыбыстарды дамыту.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3-видео -->
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4 flex flex-col justify-between">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/articulation3.mp4" type="video/mp4">
+                                Видео жүктелмеді (videos/articulation3.mp4)
+                            </video>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-[10px] font-extrabold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">3-сабақ</span>
+                            <h4 class="font-bold text-slate-800 text-sm mt-1">Буындарды қайталау арқылы сөйлеуді белсендіру</h4>
+                            <p class="text-xs text-slate-500 mt-1">Ырғақты буындар мен оңай сөз тіркестерін үйрету.</p>
+                        </div>
+                    </div>
+
+                    <!-- 4-видео -->
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4 flex flex-col justify-between">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/articulation4.mp4" type="video/mp4">
+                                Видео жүктелмеді (videos/articulation4.mp4)
+                            </video>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-[10px] font-extrabold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">4-сабақ</span>
+                            <h4 class="font-bold text-slate-800 text-sm mt-1">Логопедтік фоносемасиологиялық ойындар</h4>
+                            <p class="text-xs text-slate-500 mt-1">Дыбыс еліктеуіш сөздер арқылы бала тілін жаттықтыру.</p>
+                        </div>
+                    </div>
+
+                    <!-- 5-видео -->
+                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-4 flex flex-col justify-between md:col-span-2 lg:col-span-1">
+                        <div class="bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/articulation5.mp4" type="video/mp4">
+                                Видео жүктелмеді (videos/articulation5.mp4)
+                            </video>
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-[10px] font-extrabold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">5-сабақ</span>
+                            <h4 class="font-bold text-slate-800 text-sm mt-1">Алақан моторикасын сөйлеумен байланыстыру</h4>
+                            <p class="text-xs text-slate-500 mt-1">Саусақ ойындары мен сөйлеу ырғағын біріктіру сабағы.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 4. ЕРТЕГІЛЕР ӘЛЕМІ -->
+        <section id="tales" class="scroll-mt-20 space-y-8">
+            <div class="border-b-2 border-ethno-gold/30 pb-4">
+                <span class="text-xs font-bold uppercase text-ethno-gold tracking-widest">3-бөлім</span>
+                <h2 class="text-3xl font-extrabold text-slate-900">Ертегілер әлемі</h2>
+                <p class="text-slate-500 text-sm mt-1">Балаларға арналған 6 интерактивті ертегі және 1 бейне-ертегі</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Ертегі 1 -->
+                <div class="bg-white rounded-[32px] p-4 border-2 border-sky-300 shadow-md hover:shadow-xl transition flex flex-col">
+                    <div class="relative aspect-[3/4] rounded-[24px] overflow-hidden bg-slate-900 p-4 flex flex-col justify-center border border-amber-300/30 group">
+                        <img src="images/birnarse_kitap1.jpg" alt="Достық" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.onerror=null; this.src='https://placehold.co/600x800/0f172a/facc15?text=tale1.jpg';">
+                    </div>
+
+                    <div class="p-3 flex-grow flex flex-col justify-between mt-2">
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 text-lg uppercase leading-tight">Достық — әлемдегі ең бағалы қазына</h4>
+                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Адалдық, мейірімділік пен білімнің күшін түсіндіретін балабақша бүлдіршіндеріне арналған ғажайып ертегі.</p>
+                        </div>
+
+                        <div class="mt-4 pt-2">
+                            <a href="https://drive.google.com/file/d/1TuTbSRmDQB6mz2wf2gWGsLKPY6G6hQMF/view?usp=drive_link" target="_blank" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-book-open"></i> Оқу
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ертегі 2 -->
+                <div class="bg-white rounded-[32px] p-4 border-2 border-emerald-300 shadow-md hover:shadow-xl transition flex flex-col">
+                    <div class="relative aspect-[3/4] rounded-[24px] overflow-hidden bg-slate-900 p-4 flex flex-col justify-center border border-emerald-400/30 group">
+                        <img src="images/birnarse_kitap2.jpg" alt="Батыл Қоян" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.onerror=null; this.src='https://placehold.co/600x800/0f172a/10b981?text=tale2.jpg';">
+                    </div>
+
+                    <div class="p-3 flex-grow flex flex-col justify-between mt-2">
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 text-lg uppercase leading-tight">Батыл Қоян</h4>
+                            <p class="text-slate-500 text-xs mt-1">Орман жануарларының татулығы мен құпия сандықтың сырын ашатын қызықты балалар ертегісі.</p>
+                        </div>
+                        <div class="mt-4 pt-2">
+                            <a href="https://drive.google.com/file/d/1lW0GM6JrVzd2P5YIfD_1aMsitZRDVOXN/view?usp=sharing" target="_blank" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-book-open"></i> Оқу
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ертегі 3 -->
+                <div class="bg-white rounded-[32px] p-4 border-2 border-amber-300 shadow-md hover:shadow-xl transition flex flex-col">
+                    <div class="relative aspect-[3/4] rounded-[24px] overflow-hidden bg-slate-900 p-4 flex flex-col justify-center border border-ethno-gold/30 group">
+                        <img src="images/birnarse_kitap3.jpg" alt="Күн мен көктем" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.onerror=null; this.src='https://placehold.co/600x800/0f172a/d4af37?text=tale3.jpg';">
+                    </div>
+
+                    <div class="p-3 flex-grow flex flex-col justify-between mt-2">
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 text-lg uppercase leading-tight">Күн мен көктемнің оянуы</h4>
+                            <p class="text-slate-500 text-xs mt-1">Наурыз мейрамының қалай пайда болғанын сиқырлы кейіпкерлер арқылы түсіндіреді.</p>
+                        </div>
+                        <div class="mt-4 pt-2">
+                            <a href="https://drive.google.com/file/d/1pA1Bd4yWS_cxuFkso7runc2r8MwDtSjW/view?usp=sharing" target="_blank" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-book-open"></i> Оқу
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ертегі 4 -->
+                <div class="bg-white rounded-[32px] p-4 border-2 border-purple-300 shadow-md hover:shadow-xl transition flex flex-col">
+                    <div class="relative aspect-[3/4] rounded-[24px] overflow-hidden bg-slate-900 p-4 flex flex-col justify-center border border-purple-400/30 group">
+                        <img src="images/birnarse_kitap4.jpg" alt="Жұлдызшы бала" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.onerror=null; this.src='https://placehold.co/600x800/0f172a/c084fc?text=tale4.jpg';">
+                    </div>
+
+                    <div class="p-3 flex-grow flex flex-col justify-between mt-2 space-y-3">
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 text-lg uppercase leading-tight">ЖҰЛДЫЗШЫ БАЛА</h4>
+                            <p class="text-slate-500 text-xs mt-1">Жұлдыздар, Жер шары мен Айға саяхат жасап, ғарыш құпияларын бірге зерттейік!</p>
+                        </div>
+                        <div>
+                            <a href="https://drive.google.com/file/d/1yIgFEYxFXz9ZU9rpFR9_J6_6lIq7CzvT/view?usp=sharing" target="_blank" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-book-open"></i> Оқу
+                            </a>
+                        </div>
+                        <!-- ОК Видео Ертегі Орны (16:9) -->
+                        <div class="pt-2 border-t border-slate-100">
+                            <span class="text-[11px] font-bold text-slate-600 mb-1.5 block flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-play text-amber-500"></i> Видео-ертегі (ОК):
+                            </span>
+                            <div class="w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-300 shadow-inner">
+                                <iframe 
+                                    src="https://ok.ru/videoembed/16672722913933" 
+                                    class="w-full h-full border-0" 
+                                    allow="autoplay; encrypted-media; picture-in-picture" 
+                                    allowfullscreen 
+                                    title="ОК Видео Ертегі 4">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ертегі 5 -->
+                <div class="bg-white rounded-[32px] p-4 border-2 border-rose-300 shadow-md hover:shadow-xl transition flex flex-col">
+                    <div class="relative aspect-[3/4] rounded-[24px] overflow-hidden bg-slate-900 p-4 flex flex-col justify-center border border-rose-400/30 group">
+                        <img src="images/birnarse_kitap5.jpg" alt="Санжар мен Кибер-Тұлпар" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.onerror=null; this.src='https://placehold.co/600x800/0f172a/fb7185?text=tale5.jpg';">
+                    </div>
+
+                    <div class="p-3 flex-grow flex flex-col justify-between mt-2 space-y-3">
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 text-lg uppercase leading-tight">САНЖАР ЖӘНЕ КИБЕР-ТҰЛПАР</h4>
+                            <p class="text-slate-500 text-xs mt-1">Ғарыш кеңістігінде кішкентай жұлдыздарды бағып жүрген 6 жасар Санжар мен Кибер-Тұлпардың оқиғасы!</p>
+                        </div>
+                        <div>
+                            <a href="https://drive.google.com/file/d/1cBtju1ffGWC1LUlEmZa09ZExMj_7u4PV/view?usp=sharing" target="_blank" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-book-open"></i> Оқу
+                            </a>
+                        </div>
+                        <!-- ОК Видео Ертегі Орны (16:9) -->
+                        <div class="pt-2 border-t border-slate-100">
+                            <span class="text-[11px] font-bold text-slate-600 mb-1.5 block flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-play text-amber-500"></i> Видео-ертегі (ОК):
+                            </span>
+                            <div class="w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-300 shadow-inner">
+                                <iframe 
+                                    src="https://ok.ru/videoembed/16672798083725" 
+                                    class="w-full h-full border-0" 
+                                    allow="autoplay; encrypted-media; picture-in-picture" 
+                                    allowfullscreen 
+                                    title="ОК Видео Ертегі 5">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ертегі 6 -->
+                <div class="bg-white rounded-[32px] p-4 border-2 border-orange-300 shadow-md hover:shadow-xl transition flex flex-col">
+                    <div class="relative aspect-[3/4] rounded-[24px] overflow-hidden bg-slate-900 p-4 flex flex-col justify-center border border-orange-400/30 group">
+                        <img src="images/birnarse_kitap6.jpg" alt="Марстағы бәйшешек" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.onerror=null; this.src='https://placehold.co/600x800/0f172a/fb923c?text=tale6.jpg';">
+                    </div>
+
+                    <div class="p-3 flex-grow flex flex-col justify-between mt-2 space-y-3">
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 text-lg uppercase leading-tight">МАРСТАҒЫ БӘЙШЕШЕК</h4>
+                            <p class="text-slate-500 text-xs mt-1">Қызыл ғаламшар Марста бәйшешек өсіріп шығарған балалардың қызықты шытырманы!</p>
+                        </div>
+                        <div>
+                            <a href="https://drive.google.com/file/d/1Txp0A-oiJBVGWgjxpFfx2TJM_c3nZc6f/view?usp=sharing" target="_blank" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-extrabold py-3 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-book-open"></i> Оқу
+                            </a>
+                        </div>
+                        <!-- ОК Видео Ертегі Орны (16:9) -->
+                        <div class="pt-2 border-t border-slate-100">
+                            <span class="text-[11px] font-bold text-slate-600 mb-1.5 block flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-play text-amber-500"></i> Видео-ертегі (ОК):
+                            </span>
+                            <div class="w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-300 shadow-inner">
+                                <iframe 
+                                    src="https://ok.ru/videoembed/16672846842509" 
+                                    class="w-full h-full border-0" 
+                                    allow="autoplay; encrypted-media; picture-in-picture" 
+                                    allowfullscreen 
+                                    title="ОК Видео Ертегі 6">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- АЛТЫ ЕРТЕГІДЕН КЕЙІН, БІР ВИДЕО ЕРТЕГІГЕ ОРЫН -->
+            <div class="mt-8 bg-white p-6 sm:p-8 rounded-3xl border-2 border-amber-400 shadow-md">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="w-full md:w-2/3 bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center border border-amber-300">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="videos/video_ertegi.mp4" type="video/mp4">
+                            Сіздің браузеріңіз видеоны қолдамайды. (videos/video_ertegi.mp4)
+                        </video>
+                    </div>
+                    <div class="w-full md:w-1/3 space-y-3">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"><i class="fa-solid fa-film"></i> Анимациялық видео</span>
+                        <h3 class="text-2xl font-black text-slate-900">Арнайы бейне-ертегі</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Баланың есту, көру және қиял қабілетін қатар дамытатын анимацияланған, дауысталған ұлттық видео-ертегі.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 5. ИНТЕРАКТИВ -->
+        <section id="interactive" class="scroll-mt-20 space-y-8">
+            <div class="border-b-2 border-ethno-gold/30 pb-4">
+                <span class="text-xs font-bold uppercase text-ethno-gold tracking-widest">4-бөлім</span>
+                <h2 class="text-3xl font-extrabold text-slate-900">Интерактивті ойындар</h2>
+                <p class="text-slate-500 text-sm mt-1">Ойын батырмасын басқанда жаңа вкладкада ашылады</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 1-ойын -->
+                <div class="bg-white p-8 rounded-3xl border-2 border-amber-300 shadow-sm text-center flex flex-col items-center hover:shadow-lg transition">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-ethno-gold text-white flex items-center justify-center text-4xl mb-4 shadow">
+                        🎲
+                    </div>
+                    <h3 class="font-extrabold text-slate-900 text-xl mb-2">«Асық Ату» тренажеры</h3>
+                    <p class="text-slate-500 text-xs mb-6">Мергендік пен зейінді арттыруға арналған ұлттық сандық ойын.</p>
+                    <a href="oiyn1.html" target="_blank" class="mt-auto w-full bg-ethno-gold hover:bg-amber-600 text-slate-950 font-extrabold py-3.5 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-gamepad"></i> Ойынды бастау
+                    </a>
+                </div>
+
+                <!-- 2-ойын -->
+                <div class="bg-white p-8 rounded-3xl border-2 border-emerald-300 shadow-sm text-center flex flex-col items-center hover:shadow-lg transition">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 text-white flex items-center justify-center text-4xl mb-4 shadow">
+                        🧩
+                    </div>
+                    <h3 class="font-extrabold text-slate-900 text-xl mb-2">«Этно-Лабиринт» квесті</h3>
+                    <p class="text-slate-500 text-xs mb-6">Саусақ бұлшықеттері мен логиканы дамытуға арналған лабиринт.</p>
+                    <a href="oiyn2.html" target="_blank" class="mt-auto w-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-3.5 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-gamepad"></i> Ойынды бастау
+                    </a>
+                </div>
+
+                <!-- 3-ойын -->
+                <div class="bg-white p-8 rounded-3xl border-2 border-sky-300 shadow-sm text-center flex flex-col items-center hover:shadow-lg transition">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-600 text-white flex items-center justify-center text-4xl mb-4 shadow">
+                        ❓
+                    </div>
+                    <h3 class="font-extrabold text-slate-900 text-xl mb-2">«QR-Жұмбақтар» тест</h3>
+                    <p class="text-slate-500 text-xs mb-6">Отбасылық онлайн викторина мен жұмбақтар сайысы.</p>
+                    <a href="oiyn3.html" target="_blank" class="mt-auto w-full bg-sky-500 hover:bg-sky-600 text-white font-extrabold py-3.5 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-gamepad"></i> Викторинаға өту
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ЭТНО-ТӘРБИЕ АКАДЕМИЯСЫ -->
+        <section id="academy" class="scroll-mt-20 space-y-8">
+            <div class="border-b-2 border-ethno-gold/30 pb-4">
+                <span class="text-xs font-bold uppercase text-ethno-gold tracking-widest">5-бөлім</span>
+                <h2 class="text-3xl font-extrabold text-slate-900">Этно-Тәрбие Академиясы</h2>
+                <p class="text-slate-500 text-sm mt-1">Ата-аналарға арналған ғылыми-әдістемелік кеңестер мен практикалық әдеттер</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 1. Саусақ моторикасы және сөйлеу -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-amber-100 text-ethno-darkGold flex items-center justify-center text-xl font-bold mb-4">
+                            ✋
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-xl mb-2">Саусақ моторикасы және сөйлеу</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Асықпен немесе табиғи ағаш бөлшектермен массаж жасау арқылы баланың бас миындағы сөйлеу орталығы белсендіріледі. Бұл баланың тіл байлығын артырады.
+                        </p>
+                    </div>
+
+                    <div class="w-full flex flex-col items-center">
+                        <span class="text-xs font-bold text-slate-600 mb-2 block self-start"><i class="fa-solid fa-play text-amber-500"></i> Саусақ массажы бейне-сабағы:</span>
+                        
+                        <div class="w-full bg-slate-900 aspect-video rounded-2xl overflow-hidden relative flex items-center justify-center border-2 border-amber-400 shadow-md">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="videos/massazh.mp4" type="video/mp4">
+                                Сіздің браузеріңіз видеоны қолдамайды. (videos/massazh.mp4)
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Эко-әдеттерді үйде қалыптастыру -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold mb-4">
+                            🌿
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-xl mb-2">Эко-әдеттерді үйде қалыптастыру</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Пластик ойыншықтарды табиғи өнімдерге алмастыру – баланың сенсорлық сезімталдығын дамытып, табиғатқа деген сүйіспеншілікке баулиды.
+                        </p>
+
+                        <div class="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-200 space-y-2.5">
+                            <h4 class="font-bold text-emerald-900 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-list-check"></i> Күнделікті 6 эко-әдет (Белгілеп отырыңыз):
+                            </h4>
+
+                            <label class="flex items-center gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 transition">
+                                <input type="checkbox" class="w-5 h-5 accent-emerald-600 rounded cursor-pointer">
+                                <span class="text-xs font-semibold text-slate-700">1. Далаға қоқыс тастамау, сұрыптау</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 transition">
+                                <input type="checkbox" class="w-5 h-5 accent-emerald-600 rounded cursor-pointer">
+                                <span class="text-xs font-semibold text-slate-700">2. Ағаш пен тал егіп, оны күтіп-баптау</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 transition">
+                                <input type="checkbox" class="w-5 h-5 accent-emerald-600 rounded cursor-pointer">
+                                <span class="text-xs font-semibold text-slate-700">3. Су мен электр қуатын үнемді пайдалану</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 transition">
+                                <input type="checkbox" class="w-5 h-5 accent-emerald-600 rounded cursor-pointer">
+                                <span class="text-xs font-semibold text-slate-700">4. Табиғи материалдардан (асық, ағаш) бұйымдар жасау</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 transition">
+                                <input type="checkbox" class="w-5 h-5 accent-emerald-600 rounded cursor-pointer">
+                                <span class="text-xs font-semibold text-slate-700">5. Пластик пакеттер орнына эко-дорба қолдану</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 transition">
+                                <input type="checkbox" class="w-5 h-5 accent-emerald-600 rounded cursor-pointer">
+                                <span class="text-xs font-semibold text-slate-700">6. Құстарға жемшашар жасап, жем салу</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- ЭТНО-ТӘРБИЕ АКАДЕМИЯСЫ ТАРАУЫНАН КЕЙІН: ОК ПЛАТФОРМАСЫ / АТА-АНА ЧЕЛЛЕНДЖІ ВИДЕО ОРНЫ (9:16) -->
+        <section id="ok-challenge" class="scroll-mt-20">
+            <div class="bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="max-w-3xl mb-6">
+                    <span class="bg-white/20 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-white/30 mb-3 inline-block">
+                        <i class="fa-solid fa-users text-amber-200"></i> Отбасылық белсенділік
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-black">ОК платформасы — Ата-ана Челленджі</h2>
+                    <p class="text-amber-100 text-sm sm:text-base mt-2">
+                        «Этно-Тәрбие» бағыты бойынша ата-аналар арасында өткізілетін челлендж және белсенді отбасылардың ОК платформасындағы арнайы бейне-нұсқаулығы (Формат 9:16).
+                    </p>
+                </div>
+
+                <!-- 9:16 ОК Платформасының Видео Блогы (Вертикаль формат) -->
+                <div class="flex justify-center w-full">
+                    <div class="w-full max-w-[340px] aspect-[9/16] bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 relative">
+                        <!-- Одноклассники (OK.ru) embed видео ифреймін немесе сілтемесін осы жерге қоясыз: -->
+                        <iframe 
+                            src="https://ok.ru/videoembed/YOUR_VIDEO_ID_HERE" 
+                            class="w-full h-full border-0" 
+                            allow="autoplay; encrypted-media; picture-in-picture" 
+                            allowfullscreen
+                            title="OK Platform Challenge Video">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Тікелей сілтеме арқылы өту батырмасы (Қосымша options) -->
+                <div class="mt-6 flex flex-wrap items-center justify-between gap-4 bg-black/20 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
+                    <div class="text-xs sm:text-sm text-amber-100">
+                        <i class="fa-solid fa-link text-ethno-gold"></i> ОК платформасындағы ресми видеоға өту үшін батырманы басыңыз:
+                    </div>
+                    <a href="https://ok.ru/" target="_blank" id="ok-video-link" class="bg-white text-orange-600 hover:bg-amber-100 font-extrabold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> OK.ru платформасында көрмек
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. БАЛА ДАМУЫН БАҒАЛАУ МЕН ЧАТ -->
+        <section id="assessment" class="scroll-mt-20 space-y-8">
+            <div class="border-b-2 border-ethno-gold/30 pb-4">
+                <span class="text-xs font-bold uppercase text-ethno-gold tracking-widest">6-бөлім</span>
+                <h2 class="text-3xl font-extrabold text-slate-900">Бала дамуын бағалау & Кері байланыс</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- FAQ -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question text-ethno-gold"></i> Жиі қойылатын сұрақтар (FAQ)
+                    </h3>
+                    <div class="space-y-3">
+                        <details class="bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer hover:bg-amber-50/50 transition">
+                            <summary class="font-bold text-slate-800 text-sm">Асықты қалай қауіпсіз тазалауға болады?</summary>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">Асықтарды тұзды суға 30 минут қайнатып, содалы сумен жуып, кептіру керек.</p>
+                        </details>
+
+                        <details class="bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer hover:bg-amber-50/50 transition">
+                            <summary class="font-bold text-slate-800 text-sm">Саусақ массажын қанша уақыт жасаған дұрыс?</summary>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">Күніне 1-2 рет 3-5 минуттан өткізсе жеткілікті.</p>
+                        </details>
+
+                        <details class="bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer hover:bg-amber-50/50 transition">
+                            <summary class="font-bold text-slate-800 text-sm">Табиғи ойыншықтардың бала саусақ моторикасына қандай пайдасы бар?</summary>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">Ағаш пен асықтың табиғи фактурасы баланың ұсақ қол бұлшықеттерін шынықтырып, бас миындағы сөйлеу аймақтарын белсендіреді.</p>
+                        </details>
+
+                        <details class="bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer hover:bg-amber-50/50 transition">
+                            <summary class="font-bold text-slate-800 text-sm">Интерактивті рефлексия мен онлайн тесттерге қалай қатысуға болады?</summary>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">«Интерактив» бөліміндегі батырмаларды басу арқылы викториналар мен ойындарды жаңа вкладкада тегін аша аласыз.</p>
+                        </details>
+
+                        <details class="bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer hover:bg-amber-50/50 transition">
+                            <summary class="font-bold text-slate-800 text-sm">Бұл платформа балабақшамен қалай байланысады?</summary>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">Ата-аналар чат арқылы сұрақ қойып, баланың үйдегі жетістіктері мен эко-әдеттерін тәрбиешімен бөлісе алады.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Кері байланыс ЧАТЫ -->
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[460px] overflow-hidden">
+                    <div class="bg-emerald-600 text-white p-4 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-comments"></i> Ата-аналар қолдау чаты
+                    </div>
+                    <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 bg-slate-50">
+                        <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 text-xs text-slate-800 max-w-[85%] shadow-sm">
+                            Сәлеметсіз бе! Сұрағыңызды жазыңыз, модератор немесе тәрбиеші сізге жауап береді.
+                        </div>
+                    </div>
+                    <form onsubmit="sendMessage(event)" class="p-3 bg-white border-t border-slate-200 flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Сұрағыңызды енгізіңіз..." required class="flex-grow px-4 py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:border-emerald-500">
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Жіберу</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- БАҒАЛАУ СЕКЦИЯСЫНЫҢ АСТЫНДАҒЫ ЛОГОТИП ЖӘНЕ №38 «ЖАЗИРА» БӨБЕКЖАЙЫ МКҚК ЖАЗУЫ -->
+            <div class="pt-12 flex flex-col items-center justify-center text-center space-y-4">
+                <div class="logo-glow-frame w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center">
+                    <div class="w-full h-full rounded-full overflow-hidden bg-slate-900 flex items-center justify-center border-2 border-slate-200">
+                        <img src="images/logo2.jpeg" alt="Eco-Ethno Bala Logo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/400x400/0f172a/facc15?text=logo.png';">
+                    </div>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-wide uppercase">
+                    №38 "Жазира" БӨБЕКЖАЙЫ МКҚК
+                </h3>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-white mt-20 border-t-4 border-ethno-gold">
+        <div class="max-w-7xl mx-auto px-4 py-8 text-center text-xs text-slate-400">
+            © 2026 <strong>Eco-Ethno Bala</strong> — №38 "Жазира" БӨБЕКЖАЙЫ МКҚК. Барлық құқықтар қорғалған.
+        </div>
+    </footer>
+
+    <!-- JS СКРИПТТЕРІ -->
+    <script>
+        // Интерактивті Чат хабарламасы
+        function sendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const box = document.getElementById('chat-messages');
+            if(!input.value.trim()) return;
+
+            const userMsg = `<div class="ml-auto bg-emerald-600 text-white p-3 rounded-2xl rounded-tr-none text-xs max-w-[85%] shadow-sm">${input.value.trim()}</div>`;
+            box.insertAdjacentHTML('beforeend', userMsg);
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = `<div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 text-xs text-slate-800 max-w-[85%] shadow-sm">Хабарламаңыз қабылданды! Тәрбиеші жақын арада жауап береді.</div>`;
+                box.insertAdjacentHTML('beforeend', botMsg);
+                box.scrollTop = box.scrollHeight;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
+```
+
+Басқа өңдеулер немесе толықтырулар керек болса, хабарласыңыз!
